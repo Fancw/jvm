@@ -2,8 +2,6 @@ package xyz.fanchw.hutool;
 
 import cn.hutool.http.HttpUtil;
 import org.junit.Test;
-import xyz.fanchw.pojo.LombokAnno;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +21,7 @@ public class HuToolTest {
     }
 
     @Test
-    public void lombokAnnotation(){
-        LombokAnno lombokAnno=new LombokAnno("123");
+    public void lombokAnnotation() {
+
     }
 }

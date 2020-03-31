@@ -8,7 +8,7 @@ public class Common {
 
     @Test
     public void test() {
-        Food food=new Food();
+        Food food = new Food();
         food.addObserver(new People());
         food.buy();
     }

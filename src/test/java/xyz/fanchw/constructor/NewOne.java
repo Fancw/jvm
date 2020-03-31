@@ -40,9 +40,10 @@ public class NewOne {
     @Test
     public void serializable() throws Exception {
         Role role = new Role(1, "管理员", "管理员角色描述");
-        ObjectOutput objectOutput = new ObjectOutputStream(new FileOutputStream("obj.txt"));
+        File tempFile = File.createTempFile("obj", "txt");
+        ObjectOutput objectOutput = new ObjectOutputStream(new FileOutputStream(tempFile));
         objectOutput.writeObject(role);
-        ObjectInput objectInput = new ObjectInputStream(new FileInputStream("obj.txt"));
+        ObjectInput objectInput = new ObjectInputStream(new FileInputStream(tempFile));
         Role serializableRole = (Role) objectInput.readObject();
         System.out.println("role = " + role);
         System.out.println("serializableRole = " + serializableRole);
@@ -50,7 +51,7 @@ public class NewOne {
 
     @Test
     public void reflectOne() throws Exception {
-        Class clazz = Class.forName("xyz.fanchw.pojo.Role");
+        Class<?> clazz = Class.forName("xyz.fanchw.pojo.Role");
         Field[] declaredFields = clazz.getDeclaredFields();
         for (Field f : declaredFields) {
             System.out.println(f.getName());
@@ -62,16 +63,16 @@ public class NewOne {
 
     @Test
     public void constructor() throws Exception {
-        Class clazz = Class.forName("xyz.fanchw.pojo.Role");
-        Constructor[] constructors = clazz.getDeclaredConstructors();
-        for (Constructor c : constructors) {
+        Class<?> clazz = Class.forName("xyz.fanchw.pojo.Role");
+        Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+        for (Constructor<?> c : constructors) {
             System.out.println(c);
         }
         //获取默认（空参）构造方法
-        Constructor noArgConstructor = clazz.getDeclaredConstructor();
+        Constructor<?> noArgConstructor = clazz.getDeclaredConstructor();
         noArgConstructor.setAccessible(true);
         //获取指定（这里是全参）构造方法 按顺序传入构造参数的Class对象
-        Constructor allArgsConstructor = clazz.getConstructor(Integer.class, String.class, String.class);
+        Constructor<?> allArgsConstructor = clazz.getConstructor(Integer.class, String.class, String.class);
         //调用默认构造方法生成对象
         Role noArgRole = (Role) noArgConstructor.newInstance();
         System.out.println("noArgRole = " + noArgRole);
@@ -163,13 +164,13 @@ public class NewOne {
     }
 
     @Test
-    public void rLock(){
+    public void rLock() {
         Config config = new Config();
 //        config.setTransportMode(TransportMode.EPOLL);
         config.useSingleServer()
                 .setAddress("redis://115.159.189.44:6379");
         RedissonClient redisson = Redisson.create(config);
-        IntStream.rangeClosed(1,5)
+        IntStream.rangeClosed(1, 5)
                 .parallel()
                 .forEach(i -> {
                     executeLock(redisson);
@@ -178,23 +179,23 @@ public class NewOne {
         executeLock(redisson);
     }
 
-    public void executeLock(RedissonClient redisson){
+    public void executeLock(RedissonClient redisson) {
         RLock lock = redisson.getLock("myLock");
         boolean locked = false;
-        try{
+        try {
             LOGGER.info("try lock");
             locked = lock.tryLock();
 //            locked = lock.tryLock(1,2,TimeUnit.MINUTES);
-            LOGGER.info("get lock result:{}",locked);
-            if(locked){
+            LOGGER.info("get lock result:{}", locked);
+            if (locked) {
                 TimeUnit.HOURS.sleep(1);
                 LOGGER.info("get lock and finish");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             LOGGER.info("enter unlock");
-            if(locked){
+            if (locked) {
                 lock.unlock();
             }
         }
