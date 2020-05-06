@@ -1,10 +1,13 @@
 package xyz.fanchw.hutool;
 
 import cn.hutool.http.HttpUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class HuToolTest {
     public static String BAI_DU = "https://www.sogou.com";
 
@@ -22,6 +25,6 @@ public class HuToolTest {
 
     @Test
     public void lombokAnnotation() {
-
+        log.info("aaa");
     }
 }

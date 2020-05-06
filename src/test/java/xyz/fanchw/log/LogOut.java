@@ -2,14 +2,14 @@ package xyz.fanchw.log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runner.Runner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import xyz.fanchw.FanApp;
 
 @SpringBootTest(classes = {FanApp.class})
-@RunWith(Runner.class)
+@RunWith(SpringRunner.class)
 public class LogOut {
     Logger logger = LoggerFactory.getLogger(getClass());
 

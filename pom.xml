@@ -6,6 +6,11 @@
     <groupId>xyz.fan</groupId>
     <artifactId>jvm</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <flink.version>1.10.0</flink.version>
+        <scala.version>2.11.8</scala.version>
+    </properties>
     <build>
         <plugins>
             <plugin>
@@ -24,7 +29,9 @@
         <version>2.0.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <dependencies>
+
         <!--hutool-->
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -41,6 +48,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -96,6 +104,12 @@
         </dependency>
 
 
+        <dependency>
+            <scope>(default)</scope>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-streaming-java_2.11</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
